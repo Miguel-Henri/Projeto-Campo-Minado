@@ -2,28 +2,31 @@ package br.ifsp.edu.br;
 import java.util.*;
 
 public class CampoMinado {
-    private int TamTabuleiro = 7;
+    private int tamTabuleiro;
+    private int numBombas;
     private int[][] tabuleiro;
     private String[][] tabuleiroString;
     private String posicaoBombas = "";
-    private int valorResultado;
 
     public String getPosicaoBombas() {
         return posicaoBombas;
     }
 
-    public CampoMinado() {
-        tabuleiro = new int[TamTabuleiro][TamTabuleiro];
-        tabuleiroString = new String[TamTabuleiro][TamTabuleiro];
+    // Construtor com parâmetros
+    public CampoMinado(int tamTabuleiro, int numBombas) {
+        this.tamTabuleiro = tamTabuleiro;
+        this.numBombas = numBombas;
+        tabuleiro = new int[tamTabuleiro][tamTabuleiro];
+        tabuleiroString = new String[tamTabuleiro][tamTabuleiro];
         gerarTabuleiro();
-        mostrarTabuleiro();
+        
         resultado(iniciarJogo());
     }
 
     public void gerarTabuleiro() {
         gerarBombas();
-        for (int i = 0; i < TamTabuleiro; i++) {
-            for (int j = 0; j < TamTabuleiro; j++) {
+        for (int i = 0; i < tamTabuleiro; i++) {
+            for (int j = 0; j < tamTabuleiro; j++) {
                 if (tabuleiro[i][j] != 1) {
                     tabuleiro[i][j] = 0;
                 }
@@ -33,30 +36,26 @@ public class CampoMinado {
     }
 
     private void gerarBombas() {
-        int valorAleatorioX;
-        int valorAleatorioY;
-        int NumBombas = 5;
         Random aleatorio = new Random();
-        for (int i = 0; i < NumBombas; i++) {
-            valorAleatorioX = aleatorio.nextInt(7);
-            valorAleatorioY = aleatorio.nextInt(7);
-            if (tabuleiro[valorAleatorioX][valorAleatorioY] != 1) {
-                tabuleiro[valorAleatorioX][valorAleatorioY] = 1;
-                posicaoBombas = posicaoBombas + valorAleatorioX + ";" + valorAleatorioY + " ";
-            } else {
-                i--;
+        int bombasColocadas = 0;
+
+        while (bombasColocadas < numBombas) {
+            int x = aleatorio.nextInt(tamTabuleiro);
+            int y = aleatorio.nextInt(tamTabuleiro);
+
+            if (tabuleiro[x][y] != 1) {
+                tabuleiro[x][y] = 1;
+                posicaoBombas += x + ";" + y + " ";
+               
+                bombasColocadas++;
             }
         }
     }
 
     public void mostrarTabuleiro() {
-        for (int i = 0; i < TamTabuleiro; i++) {
-            for (int j = 0; j < TamTabuleiro; j++) {
-                if (tabuleiroString[i][j] != null) {
-                    System.out.print(tabuleiroString[i][j] + " ");
-                } else {
-                    System.out.print("  ");
-                }
+        for (int i = 0; i < tamTabuleiro; i++) {
+            for (int j = 0; j < tamTabuleiro; j++) {
+                System.out.print(tabuleiroString[i][j] + " ");
             }
             System.out.println();
         }
@@ -64,73 +63,78 @@ public class CampoMinado {
 
     public int iniciarJogo() {
         Scanner leitor = new Scanner(System.in);
-        int TerminouJogo = 0;
-        int X, Y;
+        int terminouJogo = 0;
+        int x, y;
 
         do {
-            System.out.println("Tabuleiro atual:");
+            System.out.println("\nTabuleiro atual:");
             mostrarTabuleiro();
 
-            System.out.println("Escolha o valor de X:");
-            X = leitor.nextInt();
-            System.out.println("Escolha o valor de Y:");
-            Y = leitor.nextInt();
+            System.out.print("Escolha o valor de X (0 a " + (tamTabuleiro - 1) + "): ");
+            x = leitor.nextInt();
+            System.out.print("Escolha o valor de Y (0 a " + (tamTabuleiro - 1) + "): ");
+            y = leitor.nextInt();
 
-            if (X < 0 || X >= TamTabuleiro || Y < 0 || Y >= TamTabuleiro) {
+            if (x < 0 || x >= tamTabuleiro || y < 0 || y >= tamTabuleiro) {
                 System.out.println("Posição inválida!");
                 continue;
             }
 
-            if (tabuleiroString[X][Y] != null) {
-                TerminouJogo = verificaBomba(X, Y);
-                if (TerminouJogo == 0) {
-                    tabuleiroString[X][Y] = "0";
+            if (tabuleiroString[x][y].equals("*")) {
+                terminouJogo = verificaBomba(x, y);
+                if (terminouJogo == 0) {
+                    tabuleiroString[x][y] = "0";
                 }
+            } else {
+                System.out.println("Essa posição já foi escolhida!");
             }
 
-            if (terminouTabuleiro() == 0) {
-                TerminouJogo = 1;
+            if (verificaVitoria()) {
+                terminouJogo = 1;
             }
 
-        } while (TerminouJogo == 0);
+        } while (terminouJogo == 0);
 
-        return TerminouJogo;
+        return terminouJogo;
     }
 
-    private int verificaBomba(int X, int Y) {
-        int retorno = 0;
-        String valores[] = posicaoBombas.trim().split(" ");
+    private int verificaBomba(int x, int y) {
+        String[] valores = posicaoBombas.trim().split(" ");
         for (String pos : valores) {
             String[] coord = pos.split(";");
-            int valorX = Integer.parseInt(coord[0]);
-            int valorY = Integer.parseInt(coord[1]);
+            int bombaX = Integer.parseInt(coord[0]);
+            int bombaY = Integer.parseInt(coord[1]);
 
-            if (X == valorX && Y == valorY) {
-                retorno = -1;
-                break;
+            if (x == bombaX && y == bombaY) {
+                return -1; 
             }
         }
-        return retorno;
+        return 0;
     }
 
-    private int terminouTabuleiro() {
-        int retorno = 0;
-        for (int i = 0; i < TamTabuleiro; i++) {
-            for (int j = 0; j < TamTabuleiro; j++) {
-                if (tabuleiroString[i][j] != null && !tabuleiroString[i][j].equals("*")) {
-                    retorno = 1;
-                    break;
+    private boolean verificaVitoria() {
+        int totalEspacos = tamTabuleiro * tamTabuleiro;
+        int espacosDescobertos = 0;
+
+        for (int i = 0; i < tamTabuleiro; i++) {
+            for (int j = 0; j < tamTabuleiro; j++) {
+                if (!tabuleiroString[i][j].equals("*")) {
+                    espacosDescobertos++;
                 }
             }
         }
-        return retorno;
+
+        return espacosDescobertos == (totalEspacos - numBombas);
     }
 
     private void resultado(int valor) {
         if (valor < 0) {
-            System.out.println("PERDEU");
+            System.out.println("\n💣 PERDEU! Você acertou uma bomba.");
         } else {
-            System.out.println("GANHOU");
+            System.out.println("\n🎉 GANHOU! Você evitou todas as bombas.");
         }
     }
+
+   
+   
 }
