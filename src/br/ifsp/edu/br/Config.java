@@ -11,6 +11,8 @@ public class Config {
     
     private static String ip;
     private static int porta = -1;
+    private static int tamanhoTabuleiro = 8;
+    private static int numBombas = 10;
     
     private Config() {
     }
@@ -55,5 +57,18 @@ public class Config {
         
         return porta;
     }
+    
+    
+    
+    //criadas
+    public static int getTamanhoTabuleiro() {
+        return tamanhoTabuleiro;
+    }
+    
+    public static int getNumBombas() {
+        return numBombas;
+    }
+
+
         
 }

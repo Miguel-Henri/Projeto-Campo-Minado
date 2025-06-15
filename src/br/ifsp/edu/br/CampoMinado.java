@@ -1,6 +1,8 @@
 package br.ifsp.edu.br;
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 public class CampoMinado {
     private int tamTabuleiro;
     private int numBombas;
@@ -11,6 +13,10 @@ public class CampoMinado {
     public String getPosicaoBombas() {
         return posicaoBombas;
     }
+    
+    
+    
+    
 
     // Construtor com parâmetros
     public CampoMinado(int tamTabuleiro, int numBombas) {
@@ -19,9 +25,13 @@ public class CampoMinado {
         tabuleiro = new int[tamTabuleiro][tamTabuleiro];
         tabuleiroString = new String[tamTabuleiro][tamTabuleiro];
         gerarTabuleiro();
-        
+        JOptionPane.showMessageDialog(null, "Bem-vindo ao Campo Minado!");
         resultado(iniciarJogo());
     }
+    
+    
+    
+    
 
     public void gerarTabuleiro() {
         gerarBombas();
@@ -34,6 +44,9 @@ public class CampoMinado {
             }
         }
     }
+    
+    
+    
 
     private void gerarBombas() {
         Random aleatorio = new Random();
@@ -52,15 +65,27 @@ public class CampoMinado {
         }
     }
 
+    
+    
+    
+    
+    
     public void mostrarTabuleiro() {
+        StringBuilder tab = new StringBuilder();
         for (int i = 0; i < tamTabuleiro; i++) {
             for (int j = 0; j < tamTabuleiro; j++) {
-                System.out.print(tabuleiroString[i][j] + " ");
+                tab.append(tabuleiroString[i][j]).append(" ");
             }
-            System.out.println();
+            tab.append("\n");
         }
+        JOptionPane.showMessageDialog(null, tab.toString(), "Tabuleiro Atual", JOptionPane.PLAIN_MESSAGE);
     }
 
+
+    
+    
+    
+    
     public int iniciarJogo() {
         Scanner leitor = new Scanner(System.in);
         int terminouJogo = 0;
@@ -70,13 +95,13 @@ public class CampoMinado {
             System.out.println("\nTabuleiro atual:");
             mostrarTabuleiro();
 
-            System.out.print("Escolha o valor de X (0 a " + (tamTabuleiro - 1) + "): ");
-            x = leitor.nextInt();
-            System.out.print("Escolha o valor de Y (0 a " + (tamTabuleiro - 1) + "): ");
-            y = leitor.nextInt();
+            String entradaX = JOptionPane.showInputDialog("Escolha o valor de X (0 a " + (tamTabuleiro - 1) + "):");
+            x = Integer.parseInt(entradaX);
+            String entradaY = JOptionPane.showInputDialog("Escolha o valor de Y (0 a " + (tamTabuleiro - 1) + "):");
+            y = Integer.parseInt(entradaY);
 
             if (x < 0 || x >= tamTabuleiro || y < 0 || y >= tamTabuleiro) {
-                System.out.println("Posição inválida!");
+            	JOptionPane.showMessageDialog(null, "Posição inválida!", "Erro", JOptionPane.ERROR_MESSAGE);
                 continue;
             }
 
@@ -86,7 +111,7 @@ public class CampoMinado {
                     tabuleiroString[x][y] = "0";
                 }
             } else {
-                System.out.println("Essa posição já foi escolhida!");
+            	JOptionPane.showMessageDialog(null, "Essa posição já foi escolhida!", "Aviso", JOptionPane.WARNING_MESSAGE);	
             }
 
             if (verificaVitoria()) {
@@ -97,7 +122,32 @@ public class CampoMinado {
 
         return terminouJogo;
     }
+    
+    
+    
+    
+    
+    //criada
+    public int jogadaRede(int x, int y) {
+        if (x < 0 || x >= tamTabuleiro || y < 0 || y >= tamTabuleiro) {
+            return -2;
+        }
 
+        if (!tabuleiroString[x][y].equals("*")) {
+            return -3; 
+        }
+
+        if (verificaBomba(x, y) == -1) {
+            return -1; 
+        } else {
+            tabuleiroString[x][y] = "0"; 
+            return 0; 
+        }
+    }
+
+    
+    
+    
     private int verificaBomba(int x, int y) {
         String[] valores = posicaoBombas.trim().split(" ");
         for (String pos : valores) {
@@ -111,8 +161,32 @@ public class CampoMinado {
         }
         return 0;
     }
+    
+    
+    //criada
+    public int getTam() {
+        return tamTabuleiro;
+    }
+    
+    
+    //criada
+    public String getTabuleiroString() {
+        StringBuilder tab = new StringBuilder();
+        for (int i = 0; i < tamTabuleiro; i++) {
+            for (int j = 0; j < tamTabuleiro; j++) {
+                tab.append(tabuleiroString[i][j]).append(" ");
+            }
+            tab.append("\n");
+        }
+        return tab.toString();
+    }
+    
+    
+    
+    
+    
 
-    private boolean verificaVitoria() {
+    public boolean verificaVitoria() {
         int totalEspacos = tamTabuleiro * tamTabuleiro;
         int espacosDescobertos = 0;
 
@@ -127,11 +201,15 @@ public class CampoMinado {
         return espacosDescobertos == (totalEspacos - numBombas);
     }
 
+    
+    
+    
+    
     private void resultado(int valor) {
         if (valor < 0) {
-            System.out.println("\n💣 PERDEU! Você acertou uma bomba.");
+        	JOptionPane.showMessageDialog(null, "💣 PERDEU! Você acertou uma bomba.", "Fim de jogo", JOptionPane.ERROR_MESSAGE);
         } else {
-            System.out.println("\n🎉 GANHOU! Você evitou todas as bombas.");
+        	JOptionPane.showMessageDialog(null, "🎉 GANHOU! Você evitou todas as bombas.", "Fim de jogo", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
