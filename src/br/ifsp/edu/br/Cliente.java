@@ -2,43 +2,61 @@ package br.ifsp.edu.br;
 
 import java.io.*;
 import java.net.*;
-import javax.swing.JOptionPane;
+import java.util.Scanner;
 
 public class Cliente {
-
     public static void main(String[] args) {
         try {
             Socket socket = new Socket(Config.getIp(), Config.getPorta());
-            JOptionPane.showMessageDialog(null, "Conectado ao servidor: " + socket);
+            System.out.println("Conectado ao servidor: " + socket.getInetAddress().getHostAddress());
 
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
-            boolean jogoRolando = true;
+            Scanner teclado = new Scanner(System.in);
 
-            while (jogoRolando) {
-                Object msg = in.readObject();
-                if (msg instanceof String) {
-                    String texto = (String) msg;
-                    JOptionPane.showMessageDialog(null, texto);
+            while (true) {
+                Object mensagem = in.readObject();
 
-                    if (texto.toLowerCase().contains("informe coordenadas")) {
-                        String entrada = JOptionPane.showInputDialog("Digite as coordenadas X e Y separadas por espaço:");
-                        out.writeObject(entrada);
-                    }
+                if (mensagem instanceof String) {
+                    String texto = (String) mensagem;
+                    System.out.println(texto);
+
+                   if (texto.startsWith("Sua vez")) {
+                        String jogada;
+                        while (true) {
+                            System.out.print("Digite coordenadas (x y): ");
+                            jogada = teclado.nextLine().trim();
+
+                           
+                            String[] partes = jogada.split("\\s+");
+                            if (partes.length == 2) {
+                                try {
+                                    Integer.parseInt(partes[0]);
+                                    Integer.parseInt(partes[1]);
+                                    break; 
+                                } catch (NumberFormatException e) {
+                                    System.out.println("❌ Por favor, digite dois números inteiros válidos.");
+                                }
+                            } else {
+                                System.out.println("❌ Formato inválido. Use: número número (ex: 1 2)");
+                            }
+                        }
+
+                        out.writeObject(jogada);
+                        out.flush();
+                }
 
 
-                    if (texto.toLowerCase().contains("fim de jogo") 
-                        || texto.toLowerCase().contains("venceu")) {
-                    	jogoRolando = false;
+                    if (texto.contains("Fim de jogo") || texto.contains("venceu")) {
+                        break;
                     }
                 }
             }
 
             socket.close();
-
+            teclado.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro na conexão: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
