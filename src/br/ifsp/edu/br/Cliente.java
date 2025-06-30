@@ -15,26 +15,27 @@ public class Cliente {
 
             Scanner teclado = new Scanner(System.in);
 
-            while (true) {
+            boolean continuar = true;
+
+            while (continuar) {
                 Object mensagem = in.readObject();
 
                 if (mensagem instanceof String) {
                     String texto = (String) mensagem;
                     System.out.println(texto);
 
-                   if (texto.startsWith("Sua vez")) {
+                    if (texto.startsWith("Sua vez")) {
                         String jogada;
                         while (true) {
                             System.out.print("Digite coordenadas (x y): ");
                             jogada = teclado.nextLine().trim();
 
-                           
                             String[] partes = jogada.split("\\s+");
                             if (partes.length == 2) {
                                 try {
                                     Integer.parseInt(partes[0]);
                                     Integer.parseInt(partes[1]);
-                                    break; 
+                                    break;
                                 } catch (NumberFormatException e) {
                                     System.out.println("❌ Por favor, digite dois números inteiros válidos.");
                                 }
@@ -45,11 +46,18 @@ public class Cliente {
 
                         out.writeObject(jogada);
                         out.flush();
-                }
+                    }
 
+                    // Detectar pergunta sobre novo jogo
+                    else if (texto.toLowerCase().contains("deseja jogar novamente")) {
+                        System.out.print("Digite sua resposta (sim/nao): ");
+                        String resposta = teclado.nextLine().trim().toLowerCase();
+                        out.writeObject(resposta);
+                        out.flush();
+                    }
 
-                    if (texto.contains("Fim de jogo") || texto.contains("venceu")) {
-                        break;
+                    else if (texto.toLowerCase().contains("jogo encerrado")) {
+                        continuar = false;
                     }
                 }
             }
