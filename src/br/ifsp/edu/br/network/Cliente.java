@@ -1,5 +1,6 @@
-package br.ifsp.edu.br;
+package br.ifsp.edu.br.network;
 
+import br.ifsp.edu.br.config.Config;
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;

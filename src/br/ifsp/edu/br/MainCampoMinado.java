@@ -1,8 +1,13 @@
 package br.ifsp.edu.br;
 
+import br.ifsp.edu.br.controller.CampoMinado;
+import br.ifsp.edu.br.view.TelaInicial;
+
 public class MainCampoMinado {
     public static void main(String[] args) {
-        CampoMinado game = new CampoMinado(4, 5);  
+       javax.swing.SwingUtilities.invokeLater(() ->{
+           new TelaInicial();
+       });
 
     }
 }

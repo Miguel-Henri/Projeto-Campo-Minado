@@ -1,4 +1,4 @@
-package br.ifsp.edu.br;
+package br.ifsp.edu.br.controller;
 
 import java.util.*;
 

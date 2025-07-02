@@ -1,5 +1,7 @@
-package br.ifsp.edu.br;
+package br.ifsp.edu.br.network;
 
+import br.ifsp.edu.br.config.Config;
+import br.ifsp.edu.br.controller.CampoMinado;
 import java.io.*;
 import java.net.*;
 

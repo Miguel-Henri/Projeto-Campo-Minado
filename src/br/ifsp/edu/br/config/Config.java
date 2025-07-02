@@ -1,4 +1,4 @@
-package br.ifsp.edu.br;
+package br.ifsp.edu.br.config;
 
 import java.io.File;
 import javax.xml.parsers.DocumentBuilder;
