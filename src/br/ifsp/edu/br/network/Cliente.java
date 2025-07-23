@@ -30,7 +30,7 @@ public class Cliente {
                         while (true) {
                             System.out.print("Digite coordenadas (x y): ");
                             jogada = teclado.nextLine().trim();
-
+                            //valida a jogada e envia ao servidor
                             String[] partes = jogada.split("\\s+");
                             if (partes.length == 2) {
                                 try {
