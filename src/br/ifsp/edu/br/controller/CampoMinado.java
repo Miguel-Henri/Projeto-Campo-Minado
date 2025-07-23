@@ -82,7 +82,8 @@ public class CampoMinado {
             if (tabuleiroString[x][y].equals("*")) {
                 terminouJogo = verificaBomba(x, y);
                 if (terminouJogo == 0) {
-                    tabuleiroString[x][y] = "0";
+                    tabuleiroString[x][y] = "0" ;
+                    
                 }
             } else {
                 System.out.println("Essa posição já foi escolhida!");
@@ -109,7 +110,7 @@ public class CampoMinado {
         if (verificaBomba(x, y) == -1) {
             return -1;
         } else {
-            tabuleiroString[x][y] = "0";
+            tabuleiroString[x][y] = ""+contarBombasAoRedor(x, y)+"";
             return 0;
         }
     }
@@ -165,4 +166,27 @@ public class CampoMinado {
             System.out.println("🎉 GANHOU! Você evitou todas as bombas.");
         }
     }
+    
+    public int contarBombasAoRedor(int x, int y) {
+    int bombas = 0;
+
+    for (int i = x - 1; i <= x + 1; i++) {
+        for (int j = y - 1; j <= y + 1; j++) {
+            if (i == x && j == y) continue; // 
+
+            if (i >= 0 && i < tamTabuleiro && j >= 0 && j < tamTabuleiro) {
+                if (tabuleiro[i][j] == 1) { 
+                    System.out.println("bomba achada");
+                    bombas++;
+                }
+            }else{
+                System.out.println("nenhuma bomba");
+            }
+        }
+    }
+
+    return bombas;
+}
+
+    
 }

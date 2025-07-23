@@ -168,7 +168,7 @@ public class TelaJogo extends JFrame {
             String[] colunas = linhas[i].trim().split(" ");
             for (int j = 0; j < colunas.length; j++) {
                 botoesTabuleiro[i][j].setText(colunas[j]);
-                if (colunas[j].equals("0")) {
+                if (!colunas[j].equals("*")) {
                     botoesTabuleiro[i][j].setBackground(Color.LIGHT_GRAY);
                 } else if (colunas[j].equals("*")) {
                     botoesTabuleiro[i][j].setBackground(null); 
