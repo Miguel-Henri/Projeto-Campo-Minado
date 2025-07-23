@@ -5,9 +5,7 @@ import java.util.*;
 public class CampoMinado {
     private int tamTabuleiro;
     private int numBombas;
-    //logica
     private int[][] tabuleiro;
-    //oq o jogador vê
     private String[][] tabuleiroString;
     private String posicaoBombas = "";
 
@@ -24,7 +22,7 @@ public class CampoMinado {
         System.out.println("Bem-vindo ao Campo Minado!");
        
     }
-    //gera o tabuleiro e coloca os campos sem bombas(com valor 0)
+
     public void gerarTabuleiro() {
         gerarBombas();
         for (int i = 0; i < tamTabuleiro; i++) {
@@ -36,8 +34,7 @@ public class CampoMinado {
             }
         }
     }
-    
-    //coloca as bombas(posicoes com 1) e armazena sua posicao(coordenada)
+
     private void gerarBombas() {
         Random aleatorio = new Random();
         int bombasColocadas = 0;
@@ -54,7 +51,6 @@ public class CampoMinado {
         }
     }
 
-    //mostra tabuleiro visível 
     public void mostrarTabuleiro() {
         for (int i = 0; i < tamTabuleiro; i++) {
             for (int j = 0; j < tamTabuleiro; j++) {
@@ -64,7 +60,6 @@ public class CampoMinado {
         }
     }
 
-    //logica do jogo, jogadas, verificacao de bomba e vitoria
     public int iniciarJogo() {
         Scanner leitor = new Scanner(System.in);
         int terminouJogo = 0;
@@ -102,8 +97,6 @@ public class CampoMinado {
         return terminouJogo;
     }
 
-    
-    //realiza jogada remota e retorna o status dela
     public int jogadaRede(int x, int y) {
         if (x < 0 || x >= tamTabuleiro || y < 0 || y >= tamTabuleiro) {
             return -2;
@@ -121,7 +114,6 @@ public class CampoMinado {
         }
     }
 
-    //retorna -1 se há bomba
     private int verificaBomba(int x, int y) {
         String[] valores = posicaoBombas.trim().split(" ");
         for (String pos : valores) {
@@ -136,8 +128,6 @@ public class CampoMinado {
         return 0;
     }
 
-    
-    
     public int getTam() {
         return tamTabuleiro;
     }
@@ -152,8 +142,7 @@ public class CampoMinado {
         }
         return tab.toString();
     }
-    
-    //verifica se as pocicoes sem a bomba ja foram todas abertas(condicao para vitoria)
+
     public boolean verificaVitoria() {
         int totalEspacos = tamTabuleiro * tamTabuleiro;
         int espacosDescobertos = 0;
@@ -169,8 +158,6 @@ public class CampoMinado {
         return espacosDescobertos == (totalEspacos - numBombas);
     }
 
-    
-    
     private void resultado(int valor) {
         if (valor < 0) {
             System.out.println("💣 PERDEU! Você acertou uma bomba.");
