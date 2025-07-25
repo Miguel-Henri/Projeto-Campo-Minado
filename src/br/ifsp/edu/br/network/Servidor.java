@@ -4,6 +4,7 @@ import br.ifsp.edu.br.config.Config;
 import br.ifsp.edu.br.controller.CampoMinado;
 import java.io.*;
 import java.net.*;
+import br.ifsp.edu.br.persistencia.Historico;
 
 public class Servidor {
     public static void main(String[] args) throws Exception {
@@ -65,8 +66,25 @@ public class Servidor {
                     atualOut.writeObject("Você acertou uma bomba! Fim de jogo.");
                     if (jogadorAtual == 1) {
                         out2.writeObject("O Jogador 1 perdeu. Você venceu!");
+                        
+                        Historico.salvarGame(
+                                java.util.Arrays.asList(
+                                        new Historico.JogadorResultado("Jogador 1", false),
+                                        new Historico.JogadorResultado("Jogador 2", true)
+                                
+                                )
+                                
+                        );
                     } else {
                         out1.writeObject("O Jogador 2 perdeu. Você venceu!");
+                        Historico.salvarGame(
+                                java.util.Arrays.asList(
+                                        new Historico.JogadorResultado("Jogador 1", true),
+                                        new Historico.JogadorResultado("Jogador 2", false)
+                                
+                                )
+                                
+                        );
                     }
                     jogoRolando = false;
 
@@ -74,8 +92,26 @@ public class Servidor {
                     atualOut.writeObject("Você venceu o jogo!");
                     if (jogadorAtual == 1) {
                         out2.writeObject("O Jogador 1 venceu o jogo.");
+                        
+                        Historico.salvarGame(
+                                java.util.Arrays.asList(
+                                        new Historico.JogadorResultado("Jogador 1", true),
+                                        new Historico.JogadorResultado("Jogador 2", false)
+                                
+                                )
+                                
+                        );
                     } else {
                         out1.writeObject("O Jogador 2 venceu o jogo.");
+                        
+                        Historico.salvarGame(
+                                java.util.Arrays.asList(
+                                        new Historico.JogadorResultado("Jogador 1", false),
+                                        new Historico.JogadorResultado("Jogador 2", true)
+                                
+                                )
+                                
+                        );
                     }
                     jogoRolando = false;
 

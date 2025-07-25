@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<partidas>
+            
+    
+    <partida data="2025-07-24">
+                        
+        
+        <jogador nome="Jogador 1" venceu="false"/>
+                        
+        
+        <jogador nome="Jogador 2" venceu="true"/>
+                    
+    
+    </partida>
+        
+    
+    <partida data="2025-07-24">
+                
+        <jogador nome="Jogador 1" venceu="false"/>
+                
+        <jogador nome="Jogador 2" venceu="true"/>
+            
+    </partida>
+    
+    <partida data="2025-07-24">
+        <jogador nome="Jogador 1" venceu="true"/>
+        <jogador nome="Jogador 2" venceu="false"/>
+    </partida>
+</partidas>
