@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/tfzin/Downloads/Projeto-Campo-Minado/src/br/ifsp/edu/br/view/TelaJogo.java</file>
-            <file>file:/C:/Users/tfzin/Downloads/Projeto-Campo-Minado/src/br/ifsp/edu/br/network/Servidor.java</file>
-            <file>file:/C:/Users/tfzin/Downloads/Projeto-Campo-Minado/src/br/ifsp/edu/br/view/TelaInicial.java</file>
-            <file>file:/C:/Users/tfzin/Downloads/Projeto-Campo-Minado/src/br/ifsp/edu/br/persistencia/Historico.java</file>
-            <file>file:/C:/Users/tfzin/Downloads/Projeto-Campo-Minado/src/br/ifsp/edu/br/controller/CampoMinado.java</file>
-            <file>file:/C:/Users/tfzin/Downloads/Projeto-Campo-Minado/src/br/ifsp/edu/br/MainCampoMinado.java</file>
-            <file>file:/C:/Users/tfzin/Downloads/Projeto-Campo-Minado/src/br/ifsp/edu/br/view/TelaHistorico.java</file>
+            <file>file:/home/miguel/Área%20de%20trabalho/Projeto-Campo-Minado/src/br/ifsp/edu/br/MainCampoMinado.java</file>
+            <file>file:/home/miguel/Área%20de%20trabalho/Projeto-Campo-Minado/src/br/ifsp/edu/br/view/TelaJogo.java</file>
+            <file>file:/home/miguel/Área%20de%20trabalho/Projeto-Campo-Minado/src/br/ifsp/edu/br/network/Servidor.java</file>
+            <file>file:/home/miguel/Área%20de%20trabalho/Projeto-Campo-Minado/src/br/ifsp/edu/br/network/Cliente.java</file>
         </group>
     </open-files>
 </project-private>
